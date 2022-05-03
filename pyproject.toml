@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "wiki-tools"
+version = "0.0.1"
+description = "Wiki tools project"
+
+license = "MIT"
+authors = ["Mislav Jaksic <jaksicmislav@gmail.com>"]
+maintainers = []
+readme = "README.md"
+
+homepage = "https://github.com/MislavJaksic/Wiki-Tools"
+repository = "https://github.com/MislavJaksic/Wiki-Tools"
+documentation = "https://github.com/MislavJaksic/Wiki-Tools"
+
+keywords = []
+
+classifiers = []
+
+[tool.poetry.dependencies]
+python = "^3.8"
+requests = "^2.22.0"
+mwapi = "^0.5.1"
+loguru = "^0.6.0"
+
+[tool.poetry.dev-dependencies]
+pytest-cov = "^2.8.1"
+black = "^19.10b0"
+pytest = "^5.2"
+sphinx = "^2.3.1"
+
+[tool.poetry.scripts]
+wiki-tools = "wiki_tools.runner:run"
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
