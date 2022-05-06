@@ -11,12 +11,7 @@ const mediaWikiUrl = "";
 const cookie = "";
 const bodyEditToken = "";
 
-export const mergeUsersUrl = mediaWikiUrl + "Special:UserMerge";
-
-export const movePagesUrl = mediaWikiUrl + "index.php?title=Special:MovePage&action=submit";
-export let movePagesReferer = mediaWikiUrl + `Special:MovePage/{}`;
-export let movePagesBody = "wpNewTitleNs={}&wpNewTitleMain={}&wpReason={}&wpMovetalk=1&wpLeaveRedirect={}&wpMove=Move+page&wpOldTitle={}&wpEditToken=" + bodyEditToken;
-export let movePagesOptions = {
+export let curlyOptions = {
   "headers": {
     "accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9",
     "accept-language": "en-US,en;q=0.9",
@@ -31,9 +26,17 @@ export let movePagesOptions = {
     "sec-fetch-user": "?1",
     "upgrade-insecure-requests": "1",
     "cookie": cookie,
-    "Referer": "",
+    "Referer": null,
     "Referrer-Policy": "strict-origin-when-cross-origin"
   },
-  "body": "",
+  "body": null,
   "method": "POST"
 }
+
+export const mergeUsersUrl = mediaWikiUrl + "Special:UserMerge";
+export let curlyMergeUsersReferer = null;
+export let curlyMergeUsersBody = null;
+
+export const movePagesUrl = mediaWikiUrl + "index.php?title=Special:MovePage&action=submit";
+export let curlyMovePagesReferer = mediaWikiUrl + "Special:MovePage/{}";
+export let curlyMovePagesBody = "wpNewTitleNs={}&wpNewTitleMain={}&wpReason={}&wpMovetalk=1&wpLeaveRedirect={}&wpMove=Move+page&wpOldTitle={}&wpEditToken=" + bodyEditToken;
