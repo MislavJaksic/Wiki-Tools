@@ -21,6 +21,7 @@ python = "^3.8"
 requests = "^2.22.0"
 mwapi = "^0.5.1"
 loguru = "^0.6.0"
+mwparserfromhell = "^0.6.4"
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.8.1"
