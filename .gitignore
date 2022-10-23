@@ -129,3 +129,5 @@ wiki_tools/secrets.py
 wiki_tools/download/*
 scripts/node_modules/*
 scripts/secrets.mjs
+scripts/package.json
+scripts/package-lock.json

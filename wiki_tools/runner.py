@@ -7,7 +7,10 @@
     :copyrgiht: 2019 MislavJaksic
     :license: MIT License
 """
+import json
+import re
 import sys
+from datetime import datetime
 
 import pywikibot
 
@@ -22,18 +25,60 @@ from wiki_tools.settings import users_filename, revisions_filename, sorted_revis
 def main(args):
     """main() will be run if you run this script directly
     """
-    site = pywikibot.Site('en', '')  # The site we want to run our bot on
-    page = pywikibot.Page(site, '')
-    page.text = page.text.replace('=  =', '==  ==')
-    page.save('Increased section level')  # Saves the page
+    # site = pywikibot.Site('en', '')  # The site we want to run our bot on
+    # page = pywikibot.Page(site, '')
+    # page.text = page.text.replace('=  =', '==  ==')
+    # page.save('Increased section level')  # Saves the page
 
-#     wiki_api = WikiAPI(mediawiki_url, mediawiki_api_path)
-#     wiki_downloader = WikiDownloader(wiki_api)
+    wiki_api = WikiAPI(mediawiki_url, mediawiki_api_path)
+    wiki_downloader = WikiDownloader(wiki_api)
+
+    # wiki_downloader.download_all_revisions_before_datetime(datetime.fromisoformat('2022-09-01'))
+    # exit()
+    # members = wiki_downloader.fetch_category_members("", ("subcat",))
+    # print(members)
+
+    # members = wiki_downloader.fetch_links_on_page("")
+    # print(members)
+
+#     page_list = []
+#     for cat in categories:
+#         members = wiki_downloader.fetch_category_members(cat, ("page",))
 #
-#     # members = wiki_downloader.fetch_category_members("", ("subcat",))
-#     # print(members)
+#         for member in members:
+#             page = member["title"]
+#             wikitext = wiki_downloader.fetch_page_wikitext(page)
+#             if "[[Category:" in wikitext:
+#                 page_list.append((page, wikitext))
 #
-#
+#     with open("output.txt", "w") as file:
+#         file.write(json.dumps(page_list))
+
+    # with open("output.txt", "r") as file:
+    #     templates = json.load(file)
+    #     commands = []
+    #     for title, wikitext in templates:
+    #         print(title)
+    #         match = re.search(r"(Category:.*)\]\]", wikitext) # r"(\[\[Category:.*\]\])"
+    #         category = match.group(1)
+    #         print(category)
+    #
+    #         page_list = []
+    #         members = wiki_downloader.fetch_category_members(category, ("page",))
+    #         for member in members:
+    #             page = member["title"]
+    #             page_list.append(page)
+    #
+    #         pages = " ".join(["-page:\"{}\"".format(x) for x in page_list if (x.find("Archive:") == -1 and x.find("User:") == -1 and x.find("Template:") == -1)])
+    #         command = "poetry run python pwb.py category add -to:\"{}\" -redirect {}".format(category, pages)
+    #         commands.append(command)
+    #
+    #     with open("commands.txt", "w") as file:
+    #         for command in commands:
+    #             file.write(command)
+    #             file.write("\n")
+
+
 # def store_sorted_revisions(downloader: WikiDownloader) -> None:
 #     revision_batches = downloader.file_to_jsons(revisions_filename)
 #     revisions = parse_revision_batch(revision_batches)
@@ -41,16 +86,21 @@ def main(args):
 #     with open(sorted_revisions_filename, "w") as output:
 #         for revision in revisions:
 #             output.write("{},{},{},{}\n".format(revision.user, revision.timestamp, revision.title, revision.comment))
-#
-#
-# def print_duplicate_users(downloader: WikiDownloader) -> None:
-#     users = downloader.file_to_jsons(users_filename)
-#     parsed_users = parse_users(users)
-#     duplicates = get_duplicate_users(parsed_users)
-#     print(duplicates)
-#     print(len(duplicates))
-#     # old_usernames = [duplicate.capitalize() for duplicate in duplicates]
-#     # old_users_without_pages = [x for x in old_usernames if not wiki_api.is_title_exists("User:{}".format(x))]
+
+
+def print_duplicate_users(downloader: WikiDownloader) -> None:
+    users = downloader.file_to_jsons(users_filename)
+    parsed_users = parse_users(users)
+    duplicates = get_duplicate_users(parsed_users)
+    print(duplicates)
+    print(len(duplicates))
+    # old_usernames = [duplicate.capitalize() for duplicate in duplicates]
+    # old_users_with_pages = [(new, old) for (new, old) in duplicates if downloader.api.is_title_exists("User:{}".format(old))]
+    # print(old_users_with_pages)
+    # print(len(old_users_with_pages))
+    # with open("pairsfile.txt", "w") as file:
+    #    for x in old_users_with_pages:
+    #        file.write("[[User:{}]]\n[[User:{}/Old user page]]\n".format(x[1], x[0]))
 
 
 def run():

@@ -1,16 +1,21 @@
-import {execute} from "./helper.mjs";
-import {mergeUsersUrl} from "./secrets.mjs";
+import {WikiActionPayload, WikiAction} from "./action.mjs";
+import {curlyStringToValues, whitespaceToPlus} from "./helper.mjs";
+import {curlyOptions, mergeUsersUrl, curlyMergeUsersReferer, curlyMergeUsersBody} from "./secrets.mjs";
 
-let options = {} 
-
-let body = 'wpolduser={}&wpnewuser={}&wpdelete=1&...'
-
-const lowercaseNames = [] /* Generate a list of usernames that have only the starting letter capitalized */
-
-for (let lowercaseName of lowercaseNames) {
-  let uppercaseName = lowercaseName.replace(/\b\w/g, l => l.toUpperCase());
-  console.log(lowercaseName);
-  options["body"] = body.format(lowercaseName.replace(" ", "+"), uppercaseName).replace(" ", "+")
-  /*execute(mergeUsersUrl, options)*/
+class NewOldUserPair {
+  constructor(newName, oldName) {
+    this.newName = newName;
+    this.oldName = oldName;
+  }
 }
 
+const newOldNamePairs = []
+
+for (let newOldNamePair of newOldNamePairs) {
+  let movePayload = new WikiActionPayload(mergeUsersUrl, curlyOptions);
+  movePayload.setReferer(curlyStringToValues(curlyMergeUsersReferer, []));
+  movePayload.setBody(whitespaceToPlus(curlyStringToValues(curlyMergeUsersBody, [newOldNamePair.oldName, newOldNamePair.newName])));
+
+  let mergeUser = new WikiAction(movePayload);
+  mergeUser.do();
+}
