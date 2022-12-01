@@ -19,7 +19,8 @@ from wiki_tools.download.wiki_downloader import WikiDownloader
 from wiki_tools.model.revision import parse_revision_batch
 from wiki_tools.model.user import get_duplicate_users, parse_users
 from wiki_tools.secrets import mediawiki_url, mediawiki_api_path
-from wiki_tools.settings import users_filename, revisions_filename, sorted_revisions_filename
+from wiki_tools.settings import users_filename, revisions_filename, sorted_revisions_filename, \
+    user_contributions_filename
 
 
 def main(args):
@@ -33,13 +34,19 @@ def main(args):
     wiki_api = WikiAPI(mediawiki_url, mediawiki_api_path)
     wiki_downloader = WikiDownloader(wiki_api)
 
-    # wiki_downloader.download_all_revisions_before_datetime(datetime.fromisoformat('2022-09-01'))
-    # exit()
+    # wiki_downloader.download_revisions_before_datetime(datetime.fromisoformat('2022-11-01'))
+
+    # wiki_downloader.download_user_contributions("Evon R'al")
+
     # members = wiki_downloader.fetch_category_members("", ("subcat",))
     # print(members)
 
     # members = wiki_downloader.fetch_links_on_page("")
     # print(members)
+
+    store_sorted_revisions(wiki_downloader)
+
+    # print_duplicate_users(wiki_downloader)
 
 #     page_list = []
 #     for cat in categories:
@@ -79,14 +86,16 @@ def main(args):
     #             file.write("\n")
 
 
-# def store_sorted_revisions(downloader: WikiDownloader) -> None:
-#     revision_batches = downloader.file_to_jsons(revisions_filename)
-#     revisions = parse_revision_batch(revision_batches)
-#     revisions = sorted(revisions, key=lambda x: x.user)
-#     with open(sorted_revisions_filename, "w") as output:
-#         for revision in revisions:
-#             output.write("{},{},{},{}\n".format(revision.user, revision.timestamp, revision.title, revision.comment))
-
+def store_sorted_revisions(downloader: WikiDownloader) -> None:
+    revision_batches = downloader.file_to_jsons(revisions_filename)
+    revisions = parse_revision_batch(revision_batches)
+    revisions = sorted(revisions, key=lambda x: x.user)
+    with open(sorted_revisions_filename, "w") as output:
+        for revision in revisions:
+            try:
+                output.write("{}${}${}${}${}\n".format(revision.user, revision.timestamp, revision.ns, revision.title, revision.comment.replace('\n', ' ')))
+            except:
+                print(revision)
 
 def print_duplicate_users(downloader: WikiDownloader) -> None:
     users = downloader.file_to_jsons(users_filename)

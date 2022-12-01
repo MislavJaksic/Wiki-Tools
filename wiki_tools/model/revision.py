@@ -25,8 +25,7 @@ def parse_revision_batch(revision_batchs: List) -> List[Revision]:
         pageid = revision_batch["pageid"]
         ns = revision_batch["ns"]
         title = revision_batch["title"]
-        for revision in revision_batch["revisions"]:
-            revisions.append(Revision(pageid, revision, ns, title))
+        revisions.append(Revision(pageid, revision_batch, ns, title))
     return revisions
 
 
