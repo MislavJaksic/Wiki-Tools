@@ -125,7 +125,7 @@ dmypy.json
 # Additional ignore
 .idea
 /pywikibot-*
-wiki_tools/secrets.py
+wiki_tools/secrets_wiki.py
 wiki_tools/download/*
 scripts/node_modules/*
 scripts/secrets.mjs
