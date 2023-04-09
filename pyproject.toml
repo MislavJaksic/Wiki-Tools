@@ -19,16 +19,16 @@ classifiers = []
 [tool.poetry.dependencies]
 python = "^3.8"
 requests = "^2.22.0"
-mwapi = "^0.5.1"
+mwapi = "^0.6.1"
 loguru = "^0.6.0"
 mwparserfromhell = "^0.6.4"
 matplotlib-venn = "^0.11.7"
 
 [tool.poetry.dev-dependencies]
-pytest-cov = "^2.8.1"
-black = "^19.10b0"
-pytest = "^5.2"
-sphinx = "^2.3.1"
+pytest-cov = "^4.0.0"
+black = "^23.3.0"
+pytest = "^7.3.0"
+sphinx = "^6.1.3"
 
 [tool.poetry.scripts]
 wiki-tools = "wiki_tools.runner:run"

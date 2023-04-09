@@ -126,7 +126,7 @@ dmypy.json
 .idea
 /pywikibot-*
 wiki_tools/secrets_wiki.py
-wiki_tools/download/*
+downloads/*
 scripts/node_modules/*
 scripts/secrets.mjs
 scripts/package.json

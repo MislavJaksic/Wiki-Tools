@@ -91,5 +91,6 @@ https://pypi.org/project/wiki-tools/
 ### Nodejs Scripts
 
 Before running any script with `node Script-Name.mjs` make sure you:
+
 * Run `npm install node-fetch` to install the script dependency.
 * Fill out the `secrets_wiki-template.mjs`
