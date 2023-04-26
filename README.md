@@ -59,7 +59,7 @@ Dependencies, Python version and the virtual environment are managed by `Poetry`
 
 ```
 $: poetry search Package-Name
-$: poetry add Package-Name[==Package-Version]
+$: poetry add [-D] Package-Name[==Package-Version]
 ```
 
 ### pyproject.toml
